@@ -39,7 +39,6 @@ public class Day2 {
 
                                     Integer b = nums.get(j);
                                     if (a % b == 0) {
-                                        System.out.println(a + ", " + b);
                                         return a / b;
                                     }
                                 }
