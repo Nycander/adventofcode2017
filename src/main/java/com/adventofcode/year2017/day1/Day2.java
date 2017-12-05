@@ -55,37 +55,29 @@ public class Day2 {
 }
 
 class MinMax {
-    public int min = Integer.MAX_VALUE;
-    public int max = Integer.MIN_VALUE;
+    private int min = Integer.MAX_VALUE;
+    private int max = Integer.MIN_VALUE;
 
-    public MinMax() {
+    MinMax() {
         this(Integer.MAX_VALUE, Integer.MIN_VALUE);
     }
 
-    public MinMax(int min, int max) {
+    private MinMax(int min, int max) {
         this.min = min;
         this.max = max;
     }
 
-    public void update(int value) {
+    void update(int value) {
         min = Math.min(min, value);
         max = Math.max(max, value);
     }
 
-    public void combine(MinMax minMax2) {
+    void combine(MinMax minMax2) {
         min = Math.min(min, minMax2.min);
         max = Math.max(max, minMax2.max);
     }
 
-    public int span() {
+    int span() {
         return max - min;
-    }
-
-    @Override
-    public String toString() {
-        return "MinMax{" +
-                "min=" + min +
-                ", max=" + max +
-                '}';
     }
 }
