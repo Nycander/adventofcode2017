@@ -2,21 +2,26 @@ package com.adventofcode.year2017.day1;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.IntStream;
 
 public class Day1 {
     public static void main(String... args) throws Exception {
+        System.out.println("Part 1:");
         Files.lines(Paths.get(Day1.class.getResource("/inputs/day1.txt").toURI()))
-                .mapToInt(Day1::findSum)
+                .mapToInt(ints -> findSum(ints, 1))
+                .forEach(System.out::println);
+
+        System.out.println("Part 2:");
+        Files.lines(Paths.get(Day1.class.getResource("/inputs/day1.txt").toURI()))
+                .mapToInt(ints -> findSum(ints, ints.length() / 2))
                 .forEach(System.out::println);
     }
 
-    public static int findSum(String ints) {
-        int sum = 0;
-        for(int i = 0; i < ints.length(); i++) {
-            if (ints.charAt(i) == ints.charAt((i + 1) % ints.length())) {
-                sum += Integer.parseInt("" + ints.substring(i, i + 1));
-            }
-        }
-        return sum;
+    public static int findSum(String ints, int relativeCheckPosition) {
+        return IntStream.range(0, ints.length())
+                .filter(i -> ints.charAt(i) == ints.charAt((i + relativeCheckPosition) % ints.length()))
+                .mapToObj(i -> ints.substring(i, i + 1))
+                .mapToInt(Integer::parseInt)
+                .sum();
     }
 }
