@@ -4,7 +4,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day7 {
@@ -48,8 +51,13 @@ public class Day7 {
         System.out.println("Part 2:");
 
         nodes.values().stream()
-                .filter(node -> !node.childrenHasCorrectWeight(nodes))
-                .forEach(System.out::println);
+                .filter(node -> !node.isBalanced(nodes))
+                .forEach(node -> {
+                    System.out.println(node + " " + node.getDiffWeight(nodes));
+                    Stream.of(node.children).map(nodes::get)
+                            .forEach(c -> System.out.println("\t" + c.totalWeight(nodes) + " " + c));
+                });
+        // TODO: of which, find node with no parent in list
     }
 }
 
@@ -66,21 +74,35 @@ class Node {
         this.weight = weight;
     }
 
-    boolean childrenHasCorrectWeight(Map<String, Node> nodes) {
+    boolean isBalanced(Map<String, Node> nodes) {
         return children.length == 0 ||
                 Stream.of(children)
                         .map(nodes::get)
-                        .mapToInt(node -> node.weight)
+                        .mapToInt(node -> node.totalWeight(nodes))
                         .distinct().count() == 1;
 
     }
 
+     int totalWeight(Map<String, Node> nodes) {
+        return weight +
+                Stream.of(children)
+                        .map(nodes::get)
+                        .mapToInt(node -> node.totalWeight(nodes))
+                        .sum();
+    }
+
     int getDiffWeight(Map<String, Node> nodes) {
-        int[] weights = Stream.of(children)
+        Map<Integer, Long> weights = Stream.of(children)
                 .map(nodes::get)
-                .mapToInt(node -> node.weight)
-                .toArray();
-        return 0;
+                .mapToInt(node -> node.totalWeight(nodes))
+                .boxed()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(weights);
+        List<Integer> differentWeights = weights.entrySet().stream()
+                .map(Map.Entry::getKey)
+                .sorted()
+                .collect(Collectors.toList());
+        return this.weight + (differentWeights.get(1) - differentWeights.get(0));
     }
 
     @Override
