@@ -1,4 +1,4 @@
-package com.adventofcode.year2017.day1;
+package com.adventofcode.year2017;
 
 import java.util.HashMap;
 import java.util.Map;

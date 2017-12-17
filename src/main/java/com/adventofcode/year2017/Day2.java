@@ -1,4 +1,4 @@
-package com.adventofcode.year2017.day1;
+package com.adventofcode.year2017;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

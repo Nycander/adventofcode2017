@@ -1,4 +1,4 @@
-package com.adventofcode.year2017.day1;
+package com.adventofcode.year2017;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

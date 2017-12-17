@@ -1,4 +1,4 @@
-package com.adventofcode.year2017.day1;
+package com.adventofcode.year2017;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 public class Day10 {
     public static void main(String... args) throws Exception {
         Path inputPath = Paths.get(Day10.class.getResource("/inputs/day10.txt").toURI());
-/*
         System.out.println("Part 1:");
         HashState hashState = new HashState();
 
@@ -21,7 +20,7 @@ public class Day10 {
                 .forEach(hashState::reverseRound);
 
         System.out.println(hashState.list[0] * hashState.list[1]);
-*/
+
         System.out.println("Part 2:");
         HashState part2 = new HashState();
 
